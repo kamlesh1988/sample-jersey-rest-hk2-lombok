@@ -62,6 +62,13 @@
 			<artifactId>log4j-core</artifactId>
 			<version>2.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-multipart -->
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-multipart</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+
 
 		<!-- Runtime scanning and initializing utilities for HK2 so you don't have 
 			to rely on hk2-locator/default files created by the inhabitant-generator -->

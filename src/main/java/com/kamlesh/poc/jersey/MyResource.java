@@ -1,12 +1,18 @@
 package com.kamlesh.poc.jersey;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.kamlesh.poc.jersey.service.TestService;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
+import java.io.InputStream;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -27,5 +33,11 @@ public class MyResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getIt() {
 		return "Got it! result => " + service.doTask();
+	}
+
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public String consumeResource(@FormDataParam("file") InputStream stream) {
+		return "OK";
 	}
 }
