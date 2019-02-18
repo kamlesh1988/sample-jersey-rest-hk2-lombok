@@ -1,8 +1,6 @@
 package com.kamlesh.poc.jersey.di;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
@@ -18,14 +16,17 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import gov.va.oia.HK2Utilities.HK2RuntimeInitializer;
 import com.kamlesh.poc.jersey.Main;
 import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Log4j2
 public class MyDiscoverableFeature implements Feature {
+	private static final Logger logger = LoggerFactory.getLogger(MyDiscoverableFeature.class.getName());
 
 	@Override
 	public boolean configure(FeatureContext context) {
 		ServiceLocator locator = ServiceLocatorUtilities.createAndPopulateServiceLocator(Main.SERVICE_LOCATOR_NAME);
-		log.info("MyDiscoverableFeature configure {}", locator);
+		logger.info("MyDiscoverableFeature configure {}", locator);
 		DynamicConfigurationService dcs = locator.getService(DynamicConfigurationService.class);
 		try {
 			HK2RuntimeInitializer.init(Main.SERVICE_LOCATOR_NAME, true, Main.PACKAGE_NAME);
@@ -38,7 +39,7 @@ public class MyDiscoverableFeature implements Feature {
 		try {
 			populator.populate(new ClasspathDescriptorFileFinder(this.getClass().getClassLoader()), new DuplicatePostProcessor());
 		} catch (IOException | MultiException ex) {
-			Logger.getLogger(MyDiscoverableFeature.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error(null, ex);
 		}
 		return true;
 	}

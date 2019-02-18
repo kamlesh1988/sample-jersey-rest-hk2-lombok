@@ -7,6 +7,7 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import com.kamlesh.poc.jersey.di.DependencyResolver;
@@ -38,6 +39,7 @@ public class Main extends ResourceConfig {
 		locator = ServiceLocatorUtilities.createAndPopulateServiceLocator("__HK2_Generated_0");
 		System.out.println(locator);
 		main.register(MyDiscoverableFeature.class);
+		main.register(MultiPartFeature.class);
 		main.packages(true, PACKAGE_NAME);
 		HttpServer httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), main, locator);
 		httpServer.start();
